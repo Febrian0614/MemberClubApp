@@ -1,4 +1,4 @@
-// CustomerListScreen.js
+
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -10,30 +10,30 @@ import {
 } from "react-native";
 import axios from "axios";
 
-const CustomerListScreen = ({ navigation }) => {
-  const [customers, setCustomers] = useState([]);
+const DaftarMember = ({ navigation }) => {
+  const [members, setMembers] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://retoolapi.dev/yZjtsj/customers")
-      .then((response) => setCustomers(response.data))
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => setMembers(response.data))
       .catch((error) => console.error(error));
   }, []);
 
   const renderItem = ({ item }) => (
     <Pressable
-      onPress={() => navigation.navigate("CustomerDetail", { customer: item })}
+      onPress={() => navigation.navigate("DetailMember", { member: item })}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
+          backgroundColor: pressed ? "lightblue" : "grey",
         },
         styles.wrapperCustom,
       ]}
     >
       <View
-        style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: "#ccc" }}
+        style={{ padding: 5, borderBottomWidth: 1, borderBottomColor: "#ccc" }}
       >
-        <Text>{item.customer_name}</Text>
+        <Text>{item.name}</Text>
       </View>
     </Pressable>
   );
@@ -41,7 +41,7 @@ const CustomerListScreen = ({ navigation }) => {
   return (
     <View>
       <FlatList
-        data={customers}
+        data={members}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomerListScreen;
+export default DaftarMember;
